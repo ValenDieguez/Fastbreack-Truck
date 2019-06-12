@@ -11,28 +11,32 @@ var eyeholes = {
     id: 1,
     name: "eyeholes",
     description: "Sabrosos y nutritivamente biscosos",
-    price: 4
+    price: 4,
+    img: "./img/eyeholes.jpg"
 };
 
 var smiggles = {
     id: 2,
     name: "smiggles",
     description: "Tan sabrosos que te los quitaran de donde sea",
-    price: 2
+    price: 2,
+    img: "./img/smiggles.jpg"
 };
 
 var fleebjuice = {
     id: 3,
     name: "fleebjuice",
     description: "Extraido gota a gota",
-    price: 3
+    price: 3,
+    img: "./img/fleb.jpg"
 };
 
 var turbulencejuice = {
     id: 4,
     name: "turbulencejuice",
     description: "Atraeras a humanos y nebulosarurianos por igual",
-    price: 2
+    price: 2,
+    img: "./img/turbulent.png"
 };
 
 var comidaDesayuno = [eyeholes, smiggles];
@@ -42,12 +46,15 @@ var bebidaDesayuno = [fleebjuice, turbulencejuice];
 function createSelects(lista, margen, id) {
     var divSelect = createDiv();
     divSelect.setAttribute("style", "margin-left: " + margen);
-    divSelect.setAttribute("id", id);
+
+
     var input = document.createElement("select");
     input.setAttribute("style", "margin-left: " + margen);
-    for (let option of lista) {
+    input.setAttribute("id", id);
+    for (let option in lista) {
         var food = document.createElement("option");
-        food.text = option.name;
+        food.setAttribute("value", option);
+        food.text = lista[option].name;
         input.add(food);
     }
     divSelect.appendChild(input);
@@ -77,17 +84,25 @@ function createButton(text, atribute, value) {
 }
 
 function showBuy() {
-    let divCentral = document.getElementById("divCentral");
-    divCentral.parentNode.removeChild(divCentral);
     let indexComida = retrieveValuesSelects("comida");
     let indexBebida = retrieveValuesSelects("bebida");
-    createPagSecondary(indexBebida, indexBebida);
+    let divCentral = document.getElementById("divCentral");
+    divCentral.parentNode.removeChild(divCentral);
+
+    createPagSecondary(indexComida, indexBebida);
 }
 
 function retrieveValuesSelects(id){
+    var option=document.getElementById(id).value;
+    return  option;
+}
 
-    let select = document.getElementById(id);
-    return this.options[select.selectedIndex];
+function createImagen(url){
+    let imagen = document.createElement("img");
+    imagen.setAttribute("src", url);
+    imagen.setAttribute("width", "300px");
+    imagen.setAttribute("height", "200px");
+    return imagen;
 }
 
 function createPagInitial() {
@@ -107,17 +122,32 @@ function createPagInitial() {
     divPrincipal.appendChild(divCentral);
 }
 
+function calcularprecio( indexComida, indexBebida){
+    let precio = comidaDesayuno[indexComida].price + bebidaDesayuno[indexBebida].price;
+    let divCentral = document.getElementById("divCentral");
+    let precioHtml = createTitle("h3", precio)
+    divCentral.appendChild(precioHtml);
+}
+
 function createPagSecondary(indexComida, indexBebida) {
     let divPrincipal = document.getElementById("form");
     let divCentral = createDiv();
-
+    divCentral.setAttribute("id", "divCentral");
     divCentral.appendChild(createTitle("h2", title + "  AWESOME!"));
     divCentral.appendChild(createTitle("h6", explanation2));
     linechange;
     linechange;
     divCentral.appendChild(createTitle("h4", "Your chooses are :"));
     linechange
-
+    let divImagenes = createDiv();
+    divImagenes.setAttribute("id", "divImagenes");
+    divImagenes.setAttribute("class", "row");
+    console.log(comidaDesayuno[indexComida]);
+    divImagenes.appendChild(createImagen(comidaDesayuno[indexComida].img));
+    divImagenes.appendChild(createImagen(bebidaDesayuno[indexBebida].img));
+    divCentral.appendChild(divImagenes);
+    divCentral.appendChild(createButton("calcular Precio","onclick", "calcularprecio("+indexComida+","
+    + indexBebida+")" ));
 
 
     divPrincipal.appendChild(divCentral);
