@@ -42,9 +42,11 @@ var bebidaDesayuno = [fleebjuice, turbulencejuice];
 function createSelects(lista, margen, id) {
     var divSelect = createDiv();
     divSelect.setAttribute("style", "margin-left: " + margen);
+    divSelect.setAttribute("id", id+"div");
     var input = document.createElement("select");
     input.setAttribute("style", "margin-left: " + margen);
     input.setAttribute("id", id);
+    input.setAttribute("onchange", "changecolor()");
     for (let option in lista) {
         var food = document.createElement("option");
         food.setAttribute("value", option);
@@ -98,6 +100,28 @@ function createImagen(url) {
     imagen.setAttribute("width", "300px");
     imagen.setAttribute("height", "200px");
     return imagen;
+}
+
+function changecolor(){
+    let indexComida = retrieveValuesSelects("comida");
+    let indexBebida = retrieveValuesSelects("bebida");
+    let selectComida = document.getElementById("comidadiv");
+    let selectBebida = document.getElementById("bebidadiv");
+    if (indexComida == 0){
+        selectComida.setAttribute("style", "background-color: blue;" +
+            "padding: 4%; margin-left: 35%");
+    }else{
+        selectComida.setAttribute("style", "background-color: red;"+
+            "padding: 4%; margin-left: 35%");
+    }
+    if (indexBebida == 0){
+        selectBebida.setAttribute("style", "background-color: green;"+
+            "padding: 4%; margin-left: 5%");
+    }else{
+        selectBebida.setAttribute("style", "background-color: yellow;"+
+            "padding: 4%; margin-left: 5%");
+    }
+
 }
 
 function createPagInitial() {
