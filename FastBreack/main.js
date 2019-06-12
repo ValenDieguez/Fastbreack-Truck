@@ -1,7 +1,3 @@
-// import getComidas from '/products';
-// import getBebidas from '/products';
-
-
 var title = "FAST BREACK TRUCK !";
 var explanation = "prepare Breackfast";
 var explanation2 = "HERE are your BEACKFAST!";
@@ -11,7 +7,7 @@ var eyeholes = {
     id: 1,
     name: "eyeholes",
     description: "Sabrosos y nutritivamente biscosos",
-    price: 4,
+    price: 25,
     img: "./img/eyeholes.jpg"
 };
 
@@ -19,7 +15,7 @@ var smiggles = {
     id: 2,
     name: "smiggles",
     description: "Tan sabrosos que te los quitaran de donde sea",
-    price: 2,
+    price: 50,
     img: "./img/smiggles.jpg"
 };
 
@@ -27,7 +23,7 @@ var fleebjuice = {
     id: 3,
     name: "fleebjuice",
     description: "Extraido gota a gota",
-    price: 3,
+    price: 35,
     img: "./img/fleb.jpg"
 };
 
@@ -35,7 +31,7 @@ var turbulencejuice = {
     id: 4,
     name: "turbulencejuice",
     description: "Atraeras a humanos y nebulosarurianos por igual",
-    price: 2,
+    price: 30,
     img: "./img/turbulent.png"
 };
 
@@ -46,8 +42,6 @@ var bebidaDesayuno = [fleebjuice, turbulencejuice];
 function createSelects(lista, margen, id) {
     var divSelect = createDiv();
     divSelect.setAttribute("style", "margin-left: " + margen);
-
-
     var input = document.createElement("select");
     input.setAttribute("style", "margin-left: " + margen);
     input.setAttribute("id", id);
@@ -77,6 +71,7 @@ function createDiv() {
 
 function createButton(text, atribute, value) {
     let button = document.createElement("button")
+
     button.innerText = text;
     button.setAttribute(atribute, value);
 
@@ -92,12 +87,12 @@ function showBuy() {
     createPagSecondary(indexComida, indexBebida);
 }
 
-function retrieveValuesSelects(id){
-    var option=document.getElementById(id).value;
-    return  option;
+function retrieveValuesSelects(id) {
+    var option = document.getElementById(id).value;
+    return option;
 }
 
-function createImagen(url){
+function createImagen(url) {
     let imagen = document.createElement("img");
     imagen.setAttribute("src", url);
     imagen.setAttribute("width", "300px");
@@ -116,17 +111,21 @@ function createPagInitial() {
     divSelects.appendChild(createSelects(this.comidaDesayuno, "35%", "comida"));
     divSelects.appendChild(createSelects(this.bebidaDesayuno, "60%", "bebida"));
     divCentral.appendChild(divSelects);
-    divCentral.appendChild(createButton("preparar desayuno", "onclick", "showBuy()"))
-
+    let divButton = createDiv();
+    divButton.setAttribute("style", "margin-left: 45%")
+    divButton.appendChild(createButton("preparar desayuno", "onclick", "showBuy()"))
+    divCentral.appendChild(divButton)
 
     divPrincipal.appendChild(divCentral);
 }
 
-function calcularprecio( indexComida, indexBebida){
+function calcularprecio(indexComida, indexBebida) {
     let precio = comidaDesayuno[indexComida].price + bebidaDesayuno[indexBebida].price;
     let divCentral = document.getElementById("divCentral");
     let precioHtml = createTitle("h3", precio)
     divCentral.appendChild(precioHtml);
+    window.open("thx.html",encodeURIComponent(precioHtml),
+        "_blank");
 }
 
 function createPagSecondary(indexComida, indexBebida) {
@@ -142,18 +141,28 @@ function createPagSecondary(indexComida, indexBebida) {
     let divImagenes = createDiv();
     divImagenes.setAttribute("id", "divImagenes");
     divImagenes.setAttribute("class", "row");
-    console.log(comidaDesayuno[indexComida]);
-    divImagenes.appendChild(createImagen(comidaDesayuno[indexComida].img));
-    divImagenes.appendChild(createImagen(bebidaDesayuno[indexBebida].img));
+    let divImagen1 = createDiv();
+    divImagen1.appendChild(createTitle("h4", comidaDesayuno[indexComida].name))
+    divImagen1.appendChild(createTitle("h6", comidaDesayuno[indexComida].description))
+    divImagen1.setAttribute("style", "margin: auto")
+    divImagen1.appendChild(createImagen(comidaDesayuno[indexComida].img));
+    divImagenes.appendChild(divImagen1)
+    let divImagen2 = createDiv();
+    divImagen2.appendChild(createTitle("h4", bebidaDesayuno[indexBebida].name))
+    divImagen2.appendChild(createTitle("h6", bebidaDesayuno[indexBebida].description))
+    divImagen2.appendChild(createImagen(bebidaDesayuno[indexBebida].img));
+    divImagen2.setAttribute("style", "margin: auto")
+    divImagenes.appendChild(divImagen2)
     divCentral.appendChild(divImagenes);
-    divCentral.appendChild(createButton("calcular Precio","onclick", "calcularprecio("+indexComida+","
-    + indexBebida+")" ));
+    let divButton = createDiv();
+    divButton.setAttribute("style", "margin-left: 45%")
+    divButton.appendChild(createButton("calcular Precio", "onclick", "calcularprecio(" + indexComida + ","
+        + indexBebida + ")"));
 
+    divCentral.appendChild(divButton);
 
     divPrincipal.appendChild(divCentral);
 }
-
-
 
 
 createPagInitial();
