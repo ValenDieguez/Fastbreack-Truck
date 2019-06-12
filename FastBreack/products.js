@@ -29,13 +29,13 @@ var turbulencejuice = {
 var comidaDesayuno = [eyeholes, smiggles];
 var bebidaDesayuno = [fleebjuice,turbulencejuice];
 
-// function getComidas(){
-//     return comidaDesayuno;
-// }
-//
-// function getBebidas(){
-//     return bebidaDesayuno;
-// }
+function getComidas(){
+    return comidaDesayuno;
+}
 
-export function getBebidas(){return bebidaDesayuno;}
-export function getComidas(){return comidaDesayuno;}
+function getBebidas(){
+    return bebidaDesayuno;
+}
+
+export  default   getBebidas()
+export default  getComidas()
